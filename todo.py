@@ -3,11 +3,14 @@ from pathlib import Path
 
 DB = Path("todo.txt")
 
-
 def add(text):
     with DB.open("a") as f:
         f.write(text + "\n")
 
+def done(number):
+    lines = DB.read_text().splitlines()
+    del lines[number - 1]
+    DB.write_text("".join(f"{line}\n" for line in lines))
 
 def show():
     if not DB.exists():
@@ -23,3 +26,5 @@ if __name__ == "__main__":
         add(" ".join(args))
     elif command == "list":
         show()
+    elif command == "done":
+        done(int(args[0]))
