@@ -12,6 +12,9 @@ def done(number):
     del lines[number - 1]
     DB.write_text("".join(f"{line}\n" for line in lines))
 
+def clear():
+    DB.unlink(missing_ok=True)
+
 def show():
     if not DB.exists():
         return
@@ -28,3 +31,5 @@ if __name__ == "__main__":
         show()
     elif command == "done":
         done(int(args[0]))
+    elif command == "clear":
+        clear()
